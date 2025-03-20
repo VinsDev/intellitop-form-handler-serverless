@@ -45,8 +45,21 @@ module.exports = async (req, res) => {
            <p><strong>Message:</strong> ${message || 'N/A'}</p>`,
     };
 
+    const mailOptions2 = {
+        from: 'intellitopglobalconsult@gmail.com',
+        to: email,
+        subject: `Registration Confirmation | ${fullName}`,
+        text: `Full Name: ${fullName}\nEmail: ${email}\nPhone: ${phone}\nInterest: ${interest}\nMessage: ${message || 'N/A'}`,
+        html: `<p><strong>Full Name:</strong> ${fullName}</p>
+           <p><strong>Email:</strong> ${email}</p>
+           <p><strong>Phone:</strong> ${phone}</p>
+           <p><strong>Interest:</strong> ${interest}</p>
+           <p><strong>Message:</strong> ${message || 'N/A'}</p>`,
+    };
+
     try {
         await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions2);
         return res.status(200).json({ message: 'Form submitted successfully' });
     } catch (error) {
         console.error('Error sending email:', error);
